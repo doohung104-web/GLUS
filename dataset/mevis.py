@@ -1,5 +1,6 @@
 import os
 import json
+from pathlib import Path
 
 def load_mevis_json(base_image_dir, is_train=True, set_name=None):
         
@@ -8,13 +9,19 @@ def load_mevis_json(base_image_dir, is_train=True, set_name=None):
     if set_name != None:
         data_split = set_name
         
-    image_root=os.path.join(base_image_dir, data_split, 'JPEGImages')
-    json_file=os.path.join(base_image_dir, data_split, 'meta_expressions.json')
+    image_root = os.path.join(base_image_dir, data_split, 'JPEGImages')
+    json_file = os.path.join(base_image_dir, data_split, 'meta_expressions.json')
     num_instances_without_valid_segmentation = 0
     num_instances_valid_segmentation = 0
 
 
-    ann_file = json_file
+    ann_file = Path(json_file)
+    if not ann_file.is_file():
+        raise FileNotFoundError(
+            f"MeViS annotations not found at {ann_file}. "
+            "Ensure --dataset_dir points to the dataset root containing mevis/<split>/meta_expressions.json."
+        )
+
     with open(str(ann_file), 'r') as f:
         subset_expressions_by_video = json.load(f)['videos']
     videos = list(subset_expressions_by_video.keys())

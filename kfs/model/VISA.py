@@ -5,7 +5,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from transformers import BitsAndBytesConfig, CLIPVisionModel
 
-from utils.utils import DEFAULT_IM_END_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IMAGE_PATCH_TOKEN
+from utils.utils import DEFAULT_IM_END_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IMAGE_PATCH_TOKEN, DEFAULT_VISION_TOWER
 
 from .univi.model.language_model.llama import ChatUniViLlamaForCausalLM, ChatUniViLlamaModel
 
@@ -81,7 +81,7 @@ class VISAForCausalLM(ChatUniViLlamaForCausalLM):
     ):
         if not hasattr(config, "train_mask_decoder"):
             config.mm_use_im_start_end = kwargs.pop("use_mm_start_end", True)
-            config.mm_vision_tower = kwargs.get("vision_tower", "openai/clip-vit-large-patch14")
+            config.mm_vision_tower = kwargs.get("vision_tower", DEFAULT_VISION_TOWER)
             self.ce_loss_weight = kwargs.pop("ce_loss_weight", None)
             self.iou_loss_weight = kwargs.pop("iou_loss_weight", None)
         else:

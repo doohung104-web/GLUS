@@ -17,7 +17,8 @@ from model.llava import conversation as conversation_lib
 from model.llava.mm_utils import tokenizer_image_token
 from sam2.utils.transforms import SAM2Transforms
 from utils.utils import (DEFAULT_IM_END_TOKEN, DEFAULT_IM_START_TOKEN,
-                         DEFAULT_IMAGE_TOKEN, IMAGE_TOKEN_INDEX, CONTEXT_INFO_LIST, SHORT_QUESTION_LIST)
+                         DEFAULT_IMAGE_TOKEN, IMAGE_TOKEN_INDEX, CONTEXT_INFO_LIST, SHORT_QUESTION_LIST,
+                         DEFAULT_VISION_TOWER)
 
 from dataset.mevis import load_mevis_json
 from dataset.refyoutube_vos import load_refyoutube_json
@@ -44,7 +45,7 @@ def parse_args(args):
     parser.add_argument("--model_max_length", default=512, type=int)
     parser.add_argument("--lora_r", default=8, type=int)
     parser.add_argument(
-        "--vision-tower", default="openai/clip-vit-large-patch14", type=str
+        "--vision-tower", default=DEFAULT_VISION_TOWER, type=str
     )
     parser.add_argument("--local-rank", default=0, type=int, help="node rank")
     parser.add_argument("--load_in_8bit", action="store_true", default=False)

@@ -18,7 +18,7 @@ from model.llava import conversation as conversation_lib
 from dataset.dataset import HybridDataset, ValDataset, collate_fn
 from utils.utils import (DEFAULT_IM_END_TOKEN, DEFAULT_IM_START_TOKEN,
                          AverageMeter, ProgressMeter, Summary, dict_to_cuda,
-                         intersectionAndUnionGPU)
+                         intersectionAndUnionGPU, DEFAULT_VISION_TOWER)
 
 from typing import List
 from itertools import chain
@@ -42,7 +42,7 @@ def parse_args(args):
     parser.add_argument("--model_max_length", default=512, type=int)
     parser.add_argument("--lora_r", default=8, type=int)
     parser.add_argument(
-        "--vision-tower", default="openai/clip-vit-large-patch14", type=str
+        "--vision-tower", default=DEFAULT_VISION_TOWER, type=str
     )
     parser.add_argument("--load_in_8bit", action="store_true", default=False)
     parser.add_argument("--load_in_4bit", action="store_true", default=False)

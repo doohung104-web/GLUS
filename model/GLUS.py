@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from transformers import BitsAndBytesConfig, CLIPVisionModel
 
 from utils.utils import (DEFAULT_IM_END_TOKEN, DEFAULT_IM_START_TOKEN,
-                         DEFAULT_IMAGE_PATCH_TOKEN, dict_to_cuda)
+                         DEFAULT_IMAGE_PATCH_TOKEN, DEFAULT_VISION_TOWER, dict_to_cuda)
 
 from .llava.model.language_model.llava_llama import (LlavaLlamaForCausalLM,
                                                      LlavaLlamaModel)
@@ -149,11 +149,14 @@ class GLUSForCausalLM(LlavaLlamaForCausalLM):
         if not hasattr(config, "train_mask_decoder"):
             config.mm_use_im_start_end = kwargs.pop("use_mm_start_end", True)
             config.mm_vision_tower = kwargs.get(
-                "vision_tower", "openai/clip-vit-large-patch14"
+                "vision_tower", DEFAULT_VISION_TOWER
             )
-            
+
         else:
-            config.mm_vision_tower = config.vision_tower
+            config.mm_vision_tower = kwargs.get(
+                "vision_tower", DEFAULT_VISION_TOWER
+            )
+            config.vision_tower = config.mm_vision_tower
             
         self.seg_token_idx = kwargs.pop("seg_token_idx")
 

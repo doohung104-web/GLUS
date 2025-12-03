@@ -23,7 +23,8 @@ from utils.dataset import HybridDataset, collate_fn
 from utils.rvos_eval_dataset import RVOSEvalDataset
 from utils.utils import (
     DEFAULT_IM_END_TOKEN, DEFAULT_IM_START_TOKEN,
-    AverageMeter, ProgressMeter, Summary, dict_to_cuda, intersectionAndUnionGPU
+    AverageMeter, ProgressMeter, Summary, dict_to_cuda, intersectionAndUnionGPU,
+    DEFAULT_VISION_TOWER
 )
 
 def parse_args(args):
@@ -44,7 +45,7 @@ def parse_args(args):
     parser.add_argument("--model_max_length", default=2048, type=int)
     parser.add_argument("--lora_r", default=8, type=int)
     parser.add_argument(
-        "--vision-tower", default="openai/clip-vit-large-patch14", type=str
+        "--vision-tower", default=DEFAULT_VISION_TOWER, type=str
     )
     parser.add_argument("--load_in_8bit", action="store_true", default=False)
     parser.add_argument("--load_in_4bit", action="store_true", default=False)
@@ -145,7 +146,7 @@ def main(args):
         "ce_loss_weight": args.ce_loss_weight,
         "iou_loss_weight": args.iou_loss_weight,
         "score_token_idx": args.score_token_idx,
-        "vision_tower": "openai/clip-vit-large-patch14",
+        "vision_tower": DEFAULT_VISION_TOWER,
         "use_im_start_end": False,
     }
 
