@@ -1,8 +1,11 @@
 from enum import Enum
+import os
 
 import numpy as np
 import torch
 import torch.distributed as dist
+
+DEFAULT_VISION_TOWER = os.environ.get("GLUS_VISION_TOWER", "openai/clip-vit-large-patch14")
 
 CONTEXT_FRAME_NUM=4
 QUESTION_FRAME_NUM=4

@@ -4,9 +4,20 @@
 
 DIR_PATH=''
 
+if [ -z "$DIR_PATH" ]; then
+    echo "Please set DIR_PATH to your GLUS workspace (containing outputs/ and data/)."
+    exit 1
+fi
+
 MODEL_PATH=$DIR_PATH/outputs/model
 VIS_SAVE_PATH=$DIR_PATH/generated
 PATH_TO_DATA=$DIR_PATH/data
+
+MEVIS_META="$PATH_TO_DATA/mevis/valid_u/meta_expressions.json"
+if [ ! -f "$MEVIS_META" ]; then
+    echo "Missing MeViS annotations at $MEVIS_META. Update DIR_PATH or download the dataset to match data/mevis/<split>/."
+    exit 1
+fi
 
 NUM_GPUS=$(nvidia-smi -L | wc -l)
 echo "Detected $NUM_GPUS GPUs"

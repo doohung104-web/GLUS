@@ -12,7 +12,7 @@ from peft import LoraConfig, get_peft_model
 from transformers import AutoTokenizer
 
 from model.GLUS import GLUSForCausalLM
-from utils.utils import DEFAULT_IM_END_TOKEN, DEFAULT_IM_START_TOKEN
+from utils.utils import DEFAULT_IM_END_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_VISION_TOWER
 
 
 def parse_args(args):
@@ -35,7 +35,7 @@ def parse_args(args):
     parser.add_argument("--image_size", default=1024, type=int, help="image size")
     parser.add_argument("--model_max_length", default=512, type=int)
     parser.add_argument(
-        "--vision-tower", default="openai/clip-vit-large-patch14", type=str
+        "--vision-tower", default=DEFAULT_VISION_TOWER, type=str
     )
     parser.add_argument("--lora_r", default=8, type=int)
     parser.add_argument("--lora_alpha", default=16, type=int)

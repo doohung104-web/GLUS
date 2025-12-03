@@ -45,6 +45,12 @@ pip install ./model/segment-anything-2
 pip install flash-attn==2.6.2 --no-build-isolation
 ```
 
+### Offline vision-tower path
+
+If your server cannot access the Internet, set a local CLIP checkpoint path via the
+`GLUS_VISION_TOWER` environment variable before running training, inference, or the
+KFS utilities. This keeps the vision-tower source consistent across all scripts.
+
 ## Model Zoo
 
 For more convenient following, we provide the checkpoints of GLUS without object contrastive learning.
